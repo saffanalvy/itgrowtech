@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => PromoCubit(), lazy: false),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'ITGrowTech Mock App',
         theme: ThemeData(
           colorScheme: .fromSeed(seedColor: Colors.deepPurple),
