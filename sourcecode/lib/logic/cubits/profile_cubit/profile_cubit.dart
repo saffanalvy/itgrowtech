@@ -30,12 +30,23 @@ class ProfileCubit extends Cubit<ProfileState>{
         }
 
       } on DioException catch (ex){
-        if (ex.type == DioExceptionType.unknown){
-          emit(ProfileErrorState("Please check your internet connection!"));
-        } else{
-          emit(ProfileErrorState(ex.type.toString()));
-        }
+        switch (ex.type){
+          case DioExceptionType.connectionTimeout:
+            emit(ProfileErrorState('Connection timeout'));
+          case DioExceptionType.sendTimeout:
+            emit(ProfileErrorState('Send timeout'));
+          case DioExceptionType.receiveTimeout:
+            emit(ProfileErrorState('Receive timeout'));
+          case DioExceptionType.badResponse:
+            emit(ProfileErrorState('Server error: ${ex.response?.statusCode}'));
+          case DioExceptionType.connectionError:
+            emit(ProfileErrorState('No internet / connection error'));
+          case DioExceptionType.unknown:
+            emit(ProfileErrorState('Check if your wifi is on'));
+          default:
+            emit(ProfileErrorState(ex.type.toString()));
       }
+    }
     }
   }
 }

@@ -12,7 +12,7 @@ class AuthRepository {
       Response response = await _api.makeApiCall.post("https://peanut.ifxdb.com/api/ClientCabinetBasic/IsAccountCredentialsCorrect", data: {'login': login, 'password': password});
       return response.data["token"].toString();
 
-    } catch(ex){
+    } on DioException {
       rethrow;
     }
   }
@@ -23,7 +23,7 @@ class AuthRepository {
       Response response = await _api.makeApiCall.post("https://client-api.contentdatapro.com/api/Authentication/RequestMoblieCabinetApiToken", data: {'login': login, 'password': password});
       return response.data.toString();
 
-    } catch(ex){
+    } on DioException {
       rethrow;
     }
   }

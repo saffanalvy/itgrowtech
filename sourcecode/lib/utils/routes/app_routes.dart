@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:itgrowtech/presentation/screens/auth/auth_screen.dart';
 import 'package:itgrowtech/presentation/screens/profile/profile_screen.dart';
 import 'package:itgrowtech/presentation/screens/promo/promo_screen.dart';
-import 'package:itgrowtech/presentation/screens/signals_archive/signal_screen.dart';
+import 'package:itgrowtech/presentation/screens/signals_screen/signal_screen.dart';
 
 class AppRoutes {
   static Route? onGenerateRoute(RouteSettings routeSettings) {

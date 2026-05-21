@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:itgrowtech/data/repositories/profile_repository.dart';
 import 'package:itgrowtech/logic/cubits/auth_cubit/auth_cubit.dart';
 import 'package:itgrowtech/logic/cubits/auth_cubit/auth_state.dart';
 import 'package:itgrowtech/logic/cubits/profile_cubit/profile_cubit.dart';
+import 'package:itgrowtech/logic/cubits/promo_cubit/promo_cubit.dart';
+import 'package:itgrowtech/logic/cubits/signal_cubit/signal_cubit.dart';
 import 'package:itgrowtech/logic/services/cached_login_data.dart';
 import 'package:itgrowtech/presentation/screens/auth/auth_screen.dart';
 import 'package:itgrowtech/presentation/screens/profile/profile_screen.dart';
@@ -11,10 +12,6 @@ import 'package:itgrowtech/utils/routes/app_routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  //ProfileRepository profileRepository = ProfileRepository();
-  //await profileRepository.getLastFourNumbersPhone(20234561, "ee7491664f41a05cee55a032c59b6b1be0686616d3a465d96174e94102fe18ae");
-  //await profileRepository.getAccountInformation(20234561, "ee7491664f41a05cee55a032c59b6b1be0686616d3a465d96174e94102fe18ae");
 
   await CachedLoginData.init();
   final login = CachedLoginData.getLogin;
@@ -38,6 +35,8 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => AuthCubit(), lazy: false),
         BlocProvider(create: (context) => ProfileCubit(), lazy: false),
+        BlocProvider(create: (context) => SignalCubit(), lazy: false),
+        BlocProvider(create: (context) => PromoCubit(), lazy: false),
       ],
       child: MaterialApp(
         title: 'ITGrowTech Mock App',

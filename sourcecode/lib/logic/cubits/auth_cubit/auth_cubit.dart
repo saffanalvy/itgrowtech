@@ -31,10 +31,21 @@ class AuthCubit extends Cubit<AuthState>{
         emit(LoggedInState(peanutToken, partnerToken));
       }
     } on DioException catch (ex){
-      if (ex.type == DioExceptionType.unknown){
-        emit(ErrorState("Please check your internet connection!"));
-      } else{
-        emit(ErrorState(ex.type.toString()));
+        switch (ex.type){
+          case DioExceptionType.connectionTimeout:
+            emit(ErrorState('Connection timeout'));
+          case DioExceptionType.sendTimeout:
+            emit(ErrorState('Send timeout'));
+          case DioExceptionType.receiveTimeout:
+            emit(ErrorState('Receive timeout'));
+          case DioExceptionType.badResponse:
+            emit(ErrorState('Server error: ${ex.response?.statusCode}'));
+          case DioExceptionType.connectionError:
+            emit(ErrorState('No internet / connection error'));
+          case DioExceptionType.unknown:
+            emit(ErrorState('Check if your wifi is on'));
+          default:
+            emit(ErrorState(ex.type.toString()));
       }
     }
   }
@@ -50,8 +61,23 @@ class AuthCubit extends Cubit<AuthState>{
       await CachedLoginData.setPartnerToken(partnerToken);
 
       emit(LoggedInState(peanutToken, partnerToken));
-    } catch(ex){
-      emit(ErrorState(ex.toString()));
+    } on DioException catch (ex){
+        switch (ex.type){
+          case DioExceptionType.connectionTimeout:
+            emit(ErrorState('Connection timeout'));
+          case DioExceptionType.sendTimeout:
+            emit(ErrorState('Send timeout'));
+          case DioExceptionType.receiveTimeout:
+            emit(ErrorState('Receive timeout'));
+          case DioExceptionType.badResponse:
+            emit(ErrorState('Server error: ${ex.response?.statusCode}'));
+          case DioExceptionType.connectionError:
+            emit(ErrorState('No internet / connection error'));
+          case DioExceptionType.unknown:
+            emit(ErrorState('Check if your wifi is on'));
+          default:
+            emit(ErrorState(ex.type.toString()));
+      }
     }
   }
 
@@ -60,8 +86,23 @@ class AuthCubit extends Cubit<AuthState>{
     try{
       CachedLoginData.clearCachedLoginData();
       emit(LoggedOutState());
-    } catch(ex){
-      emit(ErrorState(ex.toString()));
+    } on DioException catch (ex){
+        switch (ex.type){
+          case DioExceptionType.connectionTimeout:
+            emit(ErrorState('Connection timeout'));
+          case DioExceptionType.sendTimeout:
+            emit(ErrorState('Send timeout'));
+          case DioExceptionType.receiveTimeout:
+            emit(ErrorState('Receive timeout'));
+          case DioExceptionType.badResponse:
+            emit(ErrorState('Server error: ${ex.response?.statusCode}'));
+          case DioExceptionType.connectionError:
+            emit(ErrorState('No internet / connection error'));
+          case DioExceptionType.unknown:
+            emit(ErrorState('Check if your wifi is on'));
+          default:
+            emit(ErrorState(ex.type.toString()));
+      }
     }
   }
 }

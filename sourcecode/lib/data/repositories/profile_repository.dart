@@ -13,7 +13,7 @@ class ProfileRepository {
       Response response = await _api.makeApiCall.post("https://peanut.ifxdb.com/api/ClientCabinetBasic/GetLastFourNumbersPhone", data: {'login': login, 'token': token});
       return response.data.toString();
 
-    } catch(ex){
+    } on DioException {
       rethrow;
     }
   }
@@ -30,7 +30,7 @@ class ProfileRepository {
       ProfileModel profile = ProfileModel.fromJson(response.data);
       return profile;
 
-    } catch(ex){
+    } on DioException {
       rethrow;
     }
   }
